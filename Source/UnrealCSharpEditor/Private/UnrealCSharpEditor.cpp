@@ -246,18 +246,22 @@ void FUnrealCSharpEditorModule::Generator()
 
 	SlowTask.EnterProgressFrame(1, LOCTEXT("GeneratingCodeAction", "Solution Generator"));
 
+	// 构建几个项目框架
 	FSolutionGenerator::Generator();
 
 	SlowTask.EnterProgressFrame(1, LOCTEXT("GeneratingCodeAction", "Code Analysis"));
 
+	// 扫描出指定路径下的代码中需要注册的类型 UClass/UStruct/UEnum/UInterface
 	FCodeAnalysis::CodeAnalysis();
 
 	SlowTask.EnterProgressFrame(1, LOCTEXT("GeneratingCodeAction", "Code Analysis Generator"));
 
 	FDynamicGenerator::CodeAnalysisGenerator();
 
+	// 代码生成环境初始化：需要创建哪些类型的C#绑定代码，这些类型对应的资源路径
 	FGeneratorCore::BeginGenerator();
 
+/* ================================================================================================ */
 	SlowTask.EnterProgressFrame(1, LOCTEXT("GeneratingCodeAction", "Class Generator"));
 
 	FClassGenerator::Generator();
@@ -273,6 +277,7 @@ void FUnrealCSharpEditorModule::Generator()
 	SlowTask.EnterProgressFrame(1, LOCTEXT("GeneratingCodeAction", "Asset Generator"));
 
 	FAssetGenerator::Generator();
+/* ================================================================================================ */
 
 	FGeneratorCore::EndGenerator();
 

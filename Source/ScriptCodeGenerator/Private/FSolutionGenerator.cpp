@@ -6,12 +6,16 @@
 
 void FSolutionGenerator::Generator()
 {
+	// C:\code\UEProjects\Study01_UnrealCSharp\Plugins\UnrealCSharp\Template
 	const auto TemplatePath = FUnrealCSharpFunctionLibrary::GetPluginTemplateDirectory();
 
+	// C:\code\UEProjects\Study01_UnrealCSharp\Plugins\UnrealCSharp\Script
 	const auto ScriptPath = FUnrealCSharpFunctionLibrary::GetPluginScriptDirectory();
 
+	/* ====== 复制`D:\OH-Dotnet\UnrealCSharp\Script\CodeAnalysis`到项目根目录下的script工程 */
 	CopyTemplate(
 		FUnrealCSharpFunctionLibrary::GetCodeAnalysisProjectPath(),
+		// "D:\OH-Dotnet\UnrealCSharp\Script\CodeAnalysis\CodeAnalysis.csproj"
 		ScriptPath / CODE_ANALYSIS_NAME / CODE_ANALYSIS_NAME + PROJECT_SUFFIX,
 		TArray<TFunction<void(FString& OutResult)>>
 		{
@@ -22,6 +26,7 @@ void FSolutionGenerator::Generator()
 		FPaths::Combine(FUnrealCSharpFunctionLibrary::GetCodeAnalysisCSProjPath(), CODE_ANALYSIS_NAME + CSHARP_SUFFIX),
 		ScriptPath / CODE_ANALYSIS_NAME / CODE_ANALYSIS_NAME + CSHARP_SUFFIX);
 
+	/* ====== 复制`D:\OH-Dotnet\UnrealCSharp\Script\SourceGenerator`到项目根目录下的script工程 */
 	CopyTemplate(
 		FPaths::Combine(FUnrealCSharpFunctionLibrary::GetSourceGeneratorPath(), SOURCE_GENERATOR_NAME + PROJECT_SUFFIX),
 		ScriptPath / SOURCE_GENERATOR_NAME / SOURCE_GENERATOR_NAME + PROJECT_SUFFIX);
@@ -36,6 +41,7 @@ void FSolutionGenerator::Generator()
 		                ANALYZER_RELEASES_UN_SHIPPED_NAME + MARKDOWN_SUFFIX),
 		ScriptPath / SOURCE_GENERATOR_NAME / ANALYZER_RELEASES_UN_SHIPPED_NAME + MARKDOWN_SUFFIX);
 
+	/* ====== 复制`D:\OH-Dotnet\UnrealCSharp\Script\Weavers`到项目根目录下的script工程 */
 	CopyTemplate(
 		FPaths::Combine(FUnrealCSharpFunctionLibrary::GetWeaversPath(), WEAVERS_NAME + PROJECT_SUFFIX),
 		ScriptPath / WEAVERS_NAME / WEAVERS_NAME + PROJECT_SUFFIX);
@@ -49,10 +55,12 @@ void FSolutionGenerator::Generator()
 			&FSolutionGenerator::ReplaceDefinition
 		});
 
+	/* ====== 复制`\UnrealCSharp\Script\Weavers\FodyWeavers.xml`到项目根目录下的GameProject\script\Weavers\FodyWeavers.xml */
 	CopyTemplate(
 		FPaths::Combine(FUnrealCSharpFunctionLibrary::GetGameDirectory() / FODY_WEAVERS_NAME + XML_SUFFIX),
 		ScriptPath / WEAVERS_NAME / FODY_WEAVERS_NAME + XML_SUFFIX);
 
+	/* ====== 复制`\UnrealCSharp\Template\UE.csproj`到项目根目录下的GameProject\script\UE\UE.csproj */	
 	CopyTemplate(
 		FUnrealCSharpFunctionLibrary::GetUEProjectPath(),
 		TemplatePath / DEFAULT_UE_NAME + PROJECT_SUFFIX,
@@ -64,6 +72,7 @@ void FSolutionGenerator::Generator()
 			&FSolutionGenerator::ReplaceTargetFramework
 		});
 
+	/* ====== 复制`\UnrealCSharp\Template\Game.csproj`到项目根目录下的GameProject\script\Game\Game.csproj */	
 	CopyTemplate(
 		FUnrealCSharpFunctionLibrary::GetGameProjectPath(),
 		TemplatePath / DEFAULT_GAME_NAME + PROJECT_SUFFIX,

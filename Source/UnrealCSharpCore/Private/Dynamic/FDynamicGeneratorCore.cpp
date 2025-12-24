@@ -234,12 +234,15 @@ void FDynamicGeneratorCore::EndCodeAnalysisGenerator()
 void FDynamicGeneratorCore::CodeAnalysisGenerator(const FString& InName,
                                                   const TFunction<void(const FString&, const FString&)>& InGenerator)
 {
+	// 找到 "\Intermediate\CodeAnalysis\Dynamic.json" 中的DynamicClass
 	if (const auto Names = DynamicMap.Find(InName))
 	{
+		// 遍历里面的Class
 		for (const auto& Name : *Names)
 		{
 			if (auto Index = 0; Name.FindLastChar(TEXT('.'), Index))
 			{
+				// 提取类名，传给 InGenerator 回调处理
 				InGenerator(Name.Left(Index), Name.Right(Name.Len() - Index - 1));
 			}
 		}

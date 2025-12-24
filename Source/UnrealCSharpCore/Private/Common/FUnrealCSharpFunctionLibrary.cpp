@@ -865,6 +865,7 @@ FString FUnrealCSharpFunctionLibrary::GetBindingDirectory()
 	return BINDING_NAME;
 }
 
+// 获取插件源码所在路径
 FString FUnrealCSharpFunctionLibrary::GetPluginBaseDir()
 {
 	return IPluginManager::Get().FindPlugin(PLUGIN_NAME)->GetBaseDir();
@@ -877,12 +878,14 @@ FString FUnrealCSharpFunctionLibrary::GetPluginDirectory()
 
 FString FUnrealCSharpFunctionLibrary::GetPluginScriptDirectory()
 {
+	// PLUGIN_SCRIPT_PATH = "Script"
 	return GetPluginDirectory() / PLUGIN_SCRIPT_PATH;
 }
 
 #if WITH_EDITOR
 FString FUnrealCSharpFunctionLibrary::GetPluginTemplateDirectory()
 {
+	// PLUGIN_TEMPLATE_PATH = "Template"
 	return GetPluginDirectory() / PLUGIN_TEMPLATE_PATH;
 }
 
@@ -1041,6 +1044,7 @@ FString FUnrealCSharpFunctionLibrary::GetFullScriptDirectory()
 	return FPaths::ConvertRelativePathToFull(FPaths::ProjectDir() / GetScriptDirectory());
 }
 
+// CODE_ANALYSIS_NAME = "CodeAnalysis"
 FString FUnrealCSharpFunctionLibrary::GetCodeAnalysisCSProjPath()
 {
 	return GetFullScriptDirectory() / CODE_ANALYSIS_NAME;

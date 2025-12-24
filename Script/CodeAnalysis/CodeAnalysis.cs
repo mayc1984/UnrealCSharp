@@ -209,7 +209,8 @@ namespace CodeAnalysis
                             }
 
                             if (IsOverride)
-                            {
+                            {   
+                                // {类名：文件名}
                                 if (_overrideFile != null)
                                 {
                                     _overrideFile[$"{NamespaceDeclaration.Name}.{ClassDeclaration.Identifier}"] =
@@ -284,7 +285,7 @@ namespace CodeAnalysis
                                                 inFile;
                                         }
 
-                                        return;
+                                        return; // RQ：这里为什么直接return？
                                     }
 
                                     if (Attribute.ToString().Equals("UStruct"))

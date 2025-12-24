@@ -82,6 +82,7 @@ void FDynamicClassGenerator::Generator()
 #if WITH_EDITOR
 void FDynamicClassGenerator::CodeAnalysisGenerator()
 {
+    // 调用核心生成器，传入 "DynamicClass" 和回调函数
 	FDynamicGeneratorCore::CodeAnalysisGenerator(DYNAMIC_CLASS,
 	                                             [](const FString& InNameSpace, const FString& InName)
 	                                             {
@@ -105,8 +106,7 @@ void FDynamicClassGenerator::CodeAnalysisGenerator()
 			                                             }
 		                                             }
 	                                             });
-
-	FUnrealCSharpCoreModuleDelegates::OnDynamicClassUpdated.Broadcast();
+	FUnrealCSharpCoreModuleDelegates::OnDynamicClassUpdated.Broadcast(); // notice
 }
 
 bool FDynamicClassGenerator::IsDynamicClass(MonoClass* InMonoClass)
@@ -286,22 +286,30 @@ FString FDynamicClassGenerator::GetNameSpace(const UClass* InClass)
 
 void FDynamicClassGenerator::BeginGenerator(UClass* InClass, UClass* InParentClass)
 {
+	// 1. 继承父类的属性链
 	InClass->PropertyLink = InParentClass->PropertyLink;
 
+	// 2. 设置类的容器
 	InClass->ClassWithin = InParentClass->ClassWithin;
-
+    
+	// 3. 设置配置文件名
 	InClass->ClassConfigName = InParentClass->ClassConfigName;
 
+	// 4. 设置父类
 	InClass->SetSuperStruct(InParentClass);
 
 #if UE_U_CLASS_ADD_REFERENCED_OBJECTS
+	// 5. 继承引用对象回调
 	InClass->ClassAddReferencedObjects = InParentClass->ClassAddReferencedObjects;
 #endif
 
+	// 6. 标记为 Native 类
 	InClass->ClassFlags |= CLASS_Native;
 
+	// 7. 继承类型转换标志
 	InClass->ClassCastFlags |= InParentClass->ClassCastFlags;
 
+	// 8. 设置构造函数
 	InClass->ClassConstructor = &FDynamicClassGenerator::ClassConstructor;
 }
 

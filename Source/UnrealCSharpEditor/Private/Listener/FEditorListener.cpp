@@ -164,8 +164,10 @@ void FEditorListener::OnCancelPIE()
 	bIsPIEPlaying = false;
 }
 
+// 在 Generator code 之前先清理之前的产物
 void FEditorListener::OnBeginGenerator()
 {
+	/* 获取平台的底层文件管理系统（支持跨平台 Windows/macOS/Linux/Android 等），可能需要鸿蒙化 */
 	auto& PlatformFile = FPlatformFileManager::Get().GetPlatformFile();
 
 	if (const auto UnrealCSharpEditorSetting = FUnrealCSharpFunctionLibrary::GetMutableDefaultSafe<

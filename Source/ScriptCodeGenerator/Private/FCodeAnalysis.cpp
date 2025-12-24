@@ -149,7 +149,7 @@ void FCodeAnalysis::Analysis()
 	                                     *FPaths::ConvertRelativePathToFull(
 		                                     FUnrealCSharpFunctionLibrary::GetCodeAnalysisPath()),
 	                                     *FPaths::ConvertRelativePathToFull(
-		                                     FUnrealCSharpFunctionLibrary::GetGameDirectory())
+		                                     FUnrealCSharpFunctionLibrary::GetGameDirectory()) // 要扫描的目录：myGame/Script/Game
 	);
 
 	for (const auto& CustomProjectsDirectory : FUnrealCSharpFunctionLibrary::GetCustomProjectsDirectory())
